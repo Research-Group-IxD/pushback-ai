@@ -1,92 +1,191 @@
-# IxD Research Project Template
+# 🤔 Friction Reasoning Dataset Generator
 
-A clean, modern, and mobile-friendly template for creating academic project pages and fostering collaborative research. This template is maintained by the [Fontys University of Applied Sciences' Interaction Design (IxD) Research Group](https://www.ixdfontysict.nl) to help students and researchers showcase their work effectively and collaborate efficiently.
+Generate a dataset of multi-agent reasoning dialogues that deliberately incorporate cognitive friction, uncertainty, and emotional resonance. This project uses multiple AI agents with distinct personalities to explore questions from different angles, creating rich, human-like thought processes.
 
-## Getting Started: Repository Setup
+## 🌟 Features
 
-To ensure the integrity of the research project and a smooth collaboration process, please follow these initial setup steps carefully after creating a repository from this template.
+- **Multi-Agent System**: 6 unique agents with distinct personalities:
+  - 🤨 Problem Framer (skeptical overthinker)
+  - 💭 Memory Activator (emotional, dramatic)
+  - 🔍 Mechanism Explorer (technical, detailed)
+  - 🎭 Perspective Generator (contrarian, challenging)
+  - 🤷 Limitation Acknowledger (humble, uncertain)
+  - 🎯 Synthesizer (chaotic connector)
 
-### 1. Create a `dev` Branch
+- **Emotional Intelligence**:
+  - Generates emotionally resonant questions
+  - Incorporates vulnerability and uncertainty
+  - Mimics human thought patterns
+  - Uses casual, relatable language
 
-All ongoing work, feature additions, and experiments should happen in a `dev` branch. The `main` branch should reflect the stable, reviewed state of the project.
+- **Dataset Generation**:
+  - Configurable batch generation
+  - Progress tracking and statistics
+  - Automatic HuggingFace upload
+  - JSONL format for easy processing
 
-Create the `dev` branch from `main`:
+## 🚀 Quick Start
 
 ```bash
-git checkout -b dev
-git push -u origin dev
+# Clone the repository
+git clone https://github.com/leonvanbokhorst/friction-reasoning-data-gen.git
+cd friction-reasoning-data-gen
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your API keys
+
+# Generate a test dataset (3 examples)
+python -m friction_reasoning.dataset --test
+
+# Generate full dataset
+python -m friction_reasoning.dataset --num_examples 1200
 ```
 
-### 2. Protect the `main` Branch
+## 📊 Generated Data Format
 
-To prevent accidental pushes and ensure all changes to the `main` branch are reviewed, you must protect it. This is a critical step.
+Each example in the dataset looks like this:
 
-To enforce branch protection for the `main` branch:
+```json
+{
+    "id": "unique_id",
+    "question": "Why do we keep dancing around this thing where...",
+    "agent_responses": [
+        {
+            "agent_type": "problem_framer",
+            "thought_stream": "Hmm *fidgets nervously* isn't it weird how..."
+        },
+        // ... more agent responses
+    ],
+    "final_answer": "Maybe we're all just trying to...",
+    "metadata": {
+        "timestamp": "2024-03-XX",
+        "model": "model_name"
+    }
+}
+```
 
-1.  Navigate to your repository's main page on GitHub.
-2.  Click the **Settings** tab.
-3.  In the "Code and automation" section of the sidebar, click **Branches**.
-4.  Under "Branch protection rules," click **Add rule**.
-5.  Enter `main` in the "Branch name pattern" field.
-6.  Configure the desired protection settings. It is highly recommended to:
-    - Enable "**Require a pull request before merging**".
-    - Enable "**Require approvals**".
-7.  Click **Create** to save the rule.
+## 🗂️ Project Structure
 
-## Contribution Workflow for External Collaborators
+```bash
+friction-reasoning-data-gen/
+├── src/
+│   └── friction_reasoning/
+│       ├── agent_reasoning/    # Core agent system
+│       ├── dataset/           # Dataset generation
+│       ├── llm/              # LLM interaction
+│       └── model_training/   # Model training tools
+├── data/                    # Generated datasets
+├── tests/                  # Test suite
+└── examples/              # Usage examples
+```
 
-For students and researchers outside of the core project organization, collaboration is managed through forks and pull requests. This ensures that all contributions are reviewed before being integrated.
+## 📚 Documentation
 
-1.  **Fork the Repository:** Create your own copy of the repository by clicking the "Fork" button on the top-right of the repository page.
-2.  **Clone Your Fork:** Clone your forked repository to your local machine.
-    ```bash
-    git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
-    ```
-3.  **Create a Feature Branch:** Create a new branch on your local machine to work on your feature or bug fix.
-    ```bash
-    git checkout -b my-awesome-feature
-    ```
-4.  **Make Your Changes:** Edit the code, add your research, and commit your changes.
-5.  **Push to Your Fork:** Push your feature branch to your forked repository on GitHub.
-    ```bash
-    git push -u origin my-awesome-feature
-    ```
-6.  **Create a Pull Request (PR):** Navigate to the original repository and you will see a prompt to create a pull request from your new branch. Ensure your PR is targeted to merge into the `dev` branch of the upstream (original) repository. Provide a clear title and description for your contribution.
+- [Dataset Generation Guide](src/friction_reasoning/dataset/README.md)
+- [Model Training Guide](src/friction_reasoning/model_training/README.md)
+- [Agent System Documentation](docs/agents.md)
 
-## Project Management Methodology
+## 🛠️ Development
 
-This project adheres to the **Project-Driven Creation (PMC)** methodology, a framework that balances the structured aspects of project management with a focus on leadership, collaboration, and stakeholder engagement. For a detailed guide on how we apply PMC in this project, please see our comprehensive guide:
+### Prerequisites
 
-- [A Comprehensive Guide to Project Planning with Project-Driven Creation (PMC)](docs/project-driven-creation-PMC.md)
+- Python 3.8+
+- OpenAI API key (or compatible LLM API)
+- HuggingFace account (for dataset upload)
+- 16GB+ RAM recommended
 
-## Project Page Customization
+### Setup for Development
 
-This template also includes a pre-built academic project page.
+```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # or `venv\Scripts\activate` on Windows
 
-### Features
+# Install dev dependencies
+pip install -r requirements-dev.txt
 
-- **Teaser Video:** A prominent video banner to showcase your project's main outcome.
-- **Image & Video Carousels:** Display multiple images and videos in a clean, interactive format.
-- **Embedded Content:** Easily embed YouTube videos and PDF posters.
-- **BibTeX Citation:** A pre-formatted BibTeX entry to make it easy for others to cite your work.
-- **Responsive Design:** Looks great on desktops, tablets, and mobile devices.
+# Run tests
+pytest tests/
 
-### Customization Checklist
+# Run linting
+flake8 src/
+```
 
-To ensure your project page is complete, make sure you update the following in `docs/index.html`:
+## 🎯 Use Cases
 
-- [ ] **Metadata:** Fill in the `<meta>` tags in the `<head>` section for SEO and social media previews.
-- [ ] **Title & Authors:** Update the project title and author information.
-- [ ] **Links:** Replace all placeholder links with your actual URLs (Paper, Code, Supplementary materials, etc.).
-- [ ] **Abstract:** Write a compelling abstract for your project.
-- [ ] **Visuals:** Replace all placeholder images and videos in the `docs/static/` directory with your own.
-- [ ] **BibTeX Citation:** Update the BibTeX entry with your author details and the final URL of your project page.
-- [ ] **Favicon:** Replace the default `favicon.ico` in `docs/` with your own icon.
+1. **Training Data Generation**
+   - Create datasets for training emotional intelligence
+   - Generate examples of productive uncertainty
+   - Build friction-aware dialogue systems
 
-## Acknowledgements
+2. **Research**
+   - Study multi-agent interactions
+   - Analyze patterns in human-like reasoning
+   - Explore cognitive friction points
 
-This template was adapted from the [Academic Project Page Template](https://github.com/eliahuhorwitz/Academic-project-page-template) by Eliahu Horwitz, which was in turn inspired by the [Nerfies](https://nerfies.github.io/) project page.
+3. **Education**
+   - Demonstrate different thinking styles
+   - Practice emotional awareness
+   - Learn about cognitive biases
 
-## License
+## 🤝 Contributing
 
-This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/). You are free to use and adapt this template, but we kindly ask that you provide attribution by linking back to this repository in your site's footer.
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 Configuration
+
+Key configuration files:
+- `.env`: Environment variables and API keys
+- `config.yaml`: Generation settings
+- `pyproject.toml`: Project metadata and dependencies
+
+## 🐛 Troubleshooting
+
+Common issues and solutions:
+
+1. **API Rate Limits**
+   ```bash
+   # Use batch processing with delays
+   python -m friction_reasoning.dataset --batch_size 10 --delay 1
+   ```
+
+2. **Memory Usage**
+   ```bash
+   # Reduce parallel processing
+   python -m friction_reasoning.dataset --workers 2
+   ```
+
+3. **Dataset Quality**
+   ```bash
+   # Run analysis tools
+   python -m friction_reasoning.dataset.analyze --check-quality
+   ```
+
+## 📜 License
+
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
+## 🙏 Acknowledgments
+
+- OpenAI for the base LLM technology
+- HuggingFace for dataset hosting
+- The amazing open-source community
+
+## 📫 Contact
+
+- GitHub Issues: For bugs and features
+- Discussions: For questions and ideas
+- Email: your.email@example.com
+
+---
+Made with 🧠 and ❤️ by the Friction Reasoning team 
