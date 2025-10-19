@@ -25,3 +25,28 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://github.com/leonvanbokhorst/friction-reasoning-data-gen"
 "Bug Tracker" = "https://github.com/leonvanbokhorst/friction-reasoning-data-gen/issues" 
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+
+[tool.pylint.master]
+max-line-length = 88
+
+[tool.pylint.messages_control]
+disable = """
+    C0111, ; Missing docstring
+    R0903  ; Too few public methods
+"""
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
+asyncio_mode = "auto" 

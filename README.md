@@ -1,191 +1,83 @@
-# 🤔 Friction Reasoning Dataset Generator
+# Push-Back AI: A Friction-Driven Reasoning Model
 
-Generate a dataset of multi-agent reasoning dialogues that deliberately incorporate cognitive friction, uncertainty, and emotional resonance. This project uses multiple AI agents with distinct personalities to explore questions from different angles, creating rich, human-like thought processes.
+This repository contains the source code, dataset, and resources for the "Push-Back AI" project, a fine-tuned language model that demonstrates **friction design**. Unlike typical AI assistants that aim for frictionless, immediate compliance, this model is trained to exhibit productive disagreement, doubt, and refusal.
 
-## 🌟 Features
+This work is being prepared for a talk at **Tilburg Tech Tuesdays XXL**, an event co-hosted by Fontys ICT and Fresheads, where we will explore how introducing beneficial resistance can lead to safer, more thoughtful, and more trustworthy AI interactions.
 
-- **Multi-Agent System**: 6 unique agents with distinct personalities:
-  - 🤨 Problem Framer (skeptical overthinker)
-  - 💭 Memory Activator (emotional, dramatic)
-  - 🔍 Mechanism Explorer (technical, detailed)
-  - 🎭 Perspective Generator (contrarian, challenging)
-  - 🤷 Limitation Acknowledger (humble, uncertain)
-  - 🎯 Synthesizer (chaotic connector)
+## 🌟 Core Concepts: Friction as a Feature
 
-- **Emotional Intelligence**:
-  - Generates emotionally resonant questions
-  - Incorporates vulnerability and uncertainty
-  - Mimics human thought patterns
-  - Uses casual, relatable language
+The core idea behind this project is **Friction Design**. We believe that by intentionally designing moments of resistance, we can create AI systems that are:
 
-- **Dataset Generation**:
-  - Configurable batch generation
-  - Progress tracking and statistics
-  - Automatic HuggingFace upload
-  - JSONL format for easy processing
+- **More Thoughtful**: The model pauses, questions assumptions, and uses an internal monologue (`<think>...</think>`) to reason through doubt before answering.
+- **Safer**: By refusing inappropriate or nonsensical requests, the model avoids generating harmful or misleading content.
+- **More Trustworthy**: An AI that admits uncertainty ("I'm not sure about that...") is more reliable than one that confidently hallucinates.
 
-## 🚀 Quick Start
+This repository provides everything you need to explore this concept, from the synthetic dataset used for training to the scripts for running and evaluating the fine-tuned model.
 
-```bash
-# Clone the repository
-git clone https://github.com/leonvanbokhorst/friction-reasoning-data-gen.git
-cd friction-reasoning-data-gen
+## 🚀 Quick Start: Demo
 
-# Install dependencies
-pip install -r requirements.txt
+To see the friction model in action, you can run a side-by-side comparison with a baseline model.
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys
+1.  **Install Dependencies**:
+    ```bash
+    # Install uv (if you don't have it)
+    pip install uv
 
-# Generate a test dataset (3 examples)
-python -m friction_reasoning.dataset --test
+    # Create and sync your virtual environment
+    uv venv
+    uv pip install -e .
+    ```
 
-# Generate full dataset
-python -m friction_reasoning.dataset --num_examples 1200
+2.  **Configure Models**:
+    Open `demo/compare_models.py` and replace the placeholder model IDs with the models you want to test. By default, it uses mock responses.
+
+3.  **Run the Demo**:
+    ```bash
+    python demo/compare_models.py
+    ```
+
+This will print a formatted comparison in your terminal, showing how the friction model's responses (including its internal monologue) differ from the baseline.
+
+## 📊 The Disagreement Dataset
+
+The behavior of the friction model was taught using a curated, synthetic dataset of dialogues focused on disagreement, doubt, and refusal.
+
+- **Schema**: Each entry includes `user_input`, a series of `agents`' internal thoughts, and `metadata`.
+- **Content**: The dialogues showcase scenarios where agents challenge the user's premise, express uncertainty, or refuse to comply with a request.
+- **Availability**: A sample of the dataset is available in this repository, with the full version hosted on Hugging Face.
+
+For more details, see the [Dataset README](src/friction_reasoning/dataset/README.md).
+
+## 🛠️ Training Pipeline
+
+The model was fine-tuned using QLoRA (Quantized Low-Rank Adaptation) on a 7B parameter base model. This approach allows for efficient training on consumer-grade hardware (e.g., a single 24GB GPU).
+
+The full training pipeline is available in `src/friction_reasoning/model_training/`.
+
+## 📦 Deployment
+
+The fine-tuned model is designed for easy deployment and can be run locally using Ollama or accessed via the Hugging Face Hub.
+
+- **Hugging Face**: [Link to be added]
+- **Ollama**: [Instructions to be added]
+
+## 🗂️ Repository Structure
+
 ```
-
-## 📊 Generated Data Format
-
-Each example in the dataset looks like this:
-
-```json
-{
-    "id": "unique_id",
-    "question": "Why do we keep dancing around this thing where...",
-    "agent_responses": [
-        {
-            "agent_type": "problem_framer",
-            "thought_stream": "Hmm *fidgets nervously* isn't it weird how..."
-        },
-        // ... more agent responses
-    ],
-    "final_answer": "Maybe we're all just trying to...",
-    "metadata": {
-        "timestamp": "2024-03-XX",
-        "model": "model_name"
-    }
-}
-```
-
-## 🗂️ Project Structure
-
-```bash
-friction-reasoning-data-gen/
+.
+├── ADVISE.md
+├── docs/
+│   └── tilburg_cleanup_plan.md
 ├── src/
 │   └── friction_reasoning/
-│       ├── agent_reasoning/    # Core agent system
-│       ├── dataset/           # Dataset generation
-│       ├── llm/              # LLM interaction
-│       └── model_training/   # Model training tools
-├── data/                    # Generated datasets
-├── tests/                  # Test suite
-└── examples/              # Usage examples
+│       ├── agents/           # Agent personas for data generation
+│       ├── dataset/          # Dataset generation and documentation
+│       ├── llm/              # LiteLLM client and prompts
+│       └── model_training/   # Training, evaluation, and deployment scripts
+├── tests/                    # Unit and integration tests
+└── README.md
 ```
-
-## 📚 Documentation
-
-- [Dataset Generation Guide](src/friction_reasoning/dataset/README.md)
-- [Model Training Guide](src/friction_reasoning/model_training/README.md)
-- [Agent System Documentation](docs/agents.md)
-
-## 🛠️ Development
-
-### Prerequisites
-
-- Python 3.8+
-- OpenAI API key (or compatible LLM API)
-- HuggingFace account (for dataset upload)
-- 16GB+ RAM recommended
-
-### Setup for Development
-
-```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # or `venv\Scripts\activate` on Windows
-
-# Install dev dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-pytest tests/
-
-# Run linting
-flake8 src/
-```
-
-## 🎯 Use Cases
-
-1. **Training Data Generation**
-   - Create datasets for training emotional intelligence
-   - Generate examples of productive uncertainty
-   - Build friction-aware dialogue systems
-
-2. **Research**
-   - Study multi-agent interactions
-   - Analyze patterns in human-like reasoning
-   - Explore cognitive friction points
-
-3. **Education**
-   - Demonstrate different thinking styles
-   - Practice emotional awareness
-   - Learn about cognitive biases
-
-## 🤝 Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 Configuration
-
-Key configuration files:
-- `.env`: Environment variables and API keys
-- `config.yaml`: Generation settings
-- `pyproject.toml`: Project metadata and dependencies
-
-## 🐛 Troubleshooting
-
-Common issues and solutions:
-
-1. **API Rate Limits**
-   ```bash
-   # Use batch processing with delays
-   python -m friction_reasoning.dataset --batch_size 10 --delay 1
-   ```
-
-2. **Memory Usage**
-   ```bash
-   # Reduce parallel processing
-   python -m friction_reasoning.dataset --workers 2
-   ```
-
-3. **Dataset Quality**
-   ```bash
-   # Run analysis tools
-   python -m friction_reasoning.dataset.analyze --check-quality
-   ```
-
-## 📜 License
-
-This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🙏 Acknowledgments
 
-- OpenAI for the base LLM technology
-- HuggingFace for dataset hosting
-- The amazing open-source community
-
-## 📫 Contact
-
-- GitHub Issues: For bugs and features
-- Discussions: For questions and ideas
-- Email: your.email@example.com
-
----
-Made with 🧠 and ❤️ by the Friction Reasoning team 
+This project builds upon the foundational work of many researchers and open-source contributors. We are grateful for the tools and knowledge shared by the community. 
