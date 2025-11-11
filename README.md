@@ -1,5 +1,7 @@
 # Push-Back AI: A Friction-Driven Reasoning Model
 
+[![DOI](https://zenodo.org/badge/1079176866.svg)](https://doi.org/10.5281/zenodo.17580571)
+
 This repository contains the source code, dataset, and resources for the "Push-Back AI" project, a fine-tuned language model that demonstrates **friction design**. Unlike typical AI assistants that aim for frictionless, immediate compliance, this model is trained to exhibit productive disagreement, doubt, and refusal.
 
 This work is being prepared for a talk at **Tilburg Tech Tuesdays XXL**, an event co-hosted by Fontys ICT and Fresheads, where we will explore how introducing beneficial resistance can lead to safer, more thoughtful, and more trustworthy AI interactions.
